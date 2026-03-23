@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 
 def fileDetail():
-    directory = "data/"
+    directory = "data/raw/"
     file = [f for f in os.listdir(directory) if os.path.isfile(os.path.join(directory, f))]
     if file:
         ext = os.path.splitext(file[0])
@@ -14,7 +14,6 @@ def fileDetail():
             "filePath": filePath,
             "fileExt": ext[1]
         }
-        print(fileInfo)
         return fileInfo
     else:
         raise FileNotFoundError("No file")
@@ -45,12 +44,12 @@ def loadDataFrame(file):
         
 def saveOutput(data: pd.DataFrame, file: dict):
     if file["fileExt"] == ".csv":
-        data.to_csv(f"output/{file['fileName']}")
+        data.to_csv(f"data/processed/{file['fileName']}")
     else:
         extention = [".xlsx", ".xlsm", ".xltx", ".xltm"]
         for ext in extention:
             if file["fileExt"] == ext:
-                data.to_excel(f"output/{file['fileName']}")
+                data.to_excel(f"data/processed/{file['fileName']}")
                 
 def removeDublicate(data: pd.DataFrame):
     data = data.drop_duplicates()
