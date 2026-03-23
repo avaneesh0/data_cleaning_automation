@@ -4,19 +4,25 @@ import numpy as np
 
 def fileDetail():
     directory = "data/raw/"
-    file = [f for f in os.listdir(directory) if os.path.isfile(os.path.join(directory, f))]
-    if file:
-        ext = os.path.splitext(file[0])
-        filePath = directory + file[0]
-        
-        fileInfo = {
-            "fileName": file[0],
-            "filePath": filePath,
-            "fileExt": ext[1]
-        }
+    files = [f for f in os.listdir(directory) if os.path.isfile(os.path.join(directory, f))]
+    if files:
+        fileInfo = []
+        for f in files:
+            ext = os.path.splitext(f)
+            filePath = directory + f
+            
+            file = {
+                "fileName": f,
+                "filePath": filePath,
+                "fileExt": ext[1]
+            }
+            fileInfo.append(file)
+        print(fileInfo)
         return fileInfo
     else:
         raise FileNotFoundError("No file")
+
+fileDetail()
 
 def loadCsv(path):
     df = pd.read_csv(path)
@@ -44,12 +50,12 @@ def loadDataFrame(file):
         
 def saveOutput(data: pd.DataFrame, file: dict):
     if file["fileExt"] == ".csv":
-        data.to_csv(f"data/processed/{file['fileName']}")
+        data.to_csv(f"data/processed/{file['fileName']}", index=False)
     else:
         extention = [".xlsx", ".xlsm", ".xltx", ".xltm"]
         for ext in extention:
             if file["fileExt"] == ext:
-                data.to_excel(f"data/processed/{file['fileName']}")
+                data.to_excel(f"data/processed/{file['fileName']}", index=False)
                 
 def removeDublicate(data: pd.DataFrame):
     data = data.drop_duplicates()
@@ -65,3 +71,14 @@ def cleanData(data: pd.DataFrame):
                 data[col] = data[col].fillna(np.mean(data[col]))
     
     return data
+
+def process_all_file(files: list):
+    for file in files:
+        print(file)
+        data = loadDataFrame(file)
+
+        processed_data = data.copy()
+
+        removeDublicate(processed_data)
+        cleanData(processed_data)                
+        saveOutput(processed_data, file)

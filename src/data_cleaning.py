@@ -1,15 +1,8 @@
-import pandas as pd
-import numpy as np
-from utils import fileDetail, loadDataFrame, saveOutput, removeDublicate, cleanData
+from utils import fileDetail, process_all_file
 
-file = fileDetail()
-data = loadDataFrame(file)
+files = fileDetail()
+process_all_file(files)
 
-processed_data = data.copy()
-
-removeDublicate(processed_data)
-cleanData(processed_data)                
-saveOutput(processed_data, file)
 
 
 
