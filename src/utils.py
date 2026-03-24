@@ -1,8 +1,15 @@
 import os
+import logging
+logger = logging.getLogger(__name__)
 
 def fileDetail():
     directory = "data/raw/"
-    files = [f for f in os.listdir(directory) if os.path.isfile(os.path.join(directory, f))]
+    logging.info(f"Checking file in {directory}")
+    files = [f for f in os.listdir(directory) if f != ".gitkeep"]
+    
+    if len(files) == 0:
+        logging.info("Add file to clean data")
+        
     if files:
         fileInfo = []
         for f in files:
@@ -29,7 +36,8 @@ def fileDetail():
                 }
                 
             fileInfo.append(file)
-        print(fileInfo)
+            
+        logging.info("File info obtained")
         return fileInfo
     else:
         raise FileNotFoundError("No file")
