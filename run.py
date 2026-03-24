@@ -1,5 +1,5 @@
-from utils import fileDetail
-from pipeline import process_all_file
+from src.utils import fileDetail
+from src.pipeline import process_all_file
 
         
 def main():
