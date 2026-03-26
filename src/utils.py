@@ -46,16 +46,23 @@ def fileDetail():
 
 
 def dataframe_report(df: pd.DataFrame , report = []) -> dict :
-    data_info = []
+    data_info = [[]]
+    duplicate_value = df.duplicated().sum()
+    
+    data_info.append({"duplicate": duplicate_value})
+    
     for col in df.columns:
         if df[col].isnull().sum() > 0:
-            data_info.append({"column": col,
+            data_info[0].append({"column": col,
                               "null_value": df[col].isnull().sum()})
     
     if report:
-        for r in report:
-            data_info.append({"column": r['column'],
+        logging.info("Preparing file report after cleaning")
+        for r in report[0]:
+            data_info[0].append({"column": r['column'],
                               "null_value": df[r['column']].isnull().sum()})
+    else:
+        logging.info("Preparing file report before cleaning")
     
     return data_info
 
@@ -73,9 +80,13 @@ def write_report_before_cleaning(report: list):
         f.write("\n")
         f.write("Missing value\n")
         
-        for r in report:
+        for r in report[0]:
             f.write(f"-- {r['column']} : {r['null_value']}\n")
             
+        f.write("\n")
+        f.write("Dublicate\n")
+        f.write(f"-- Dublicate value : {report[1]['duplicate']} ")
+        f.write("\n")
         f.write("\n")
             
 def write_report_after_cleaning(report: list):
@@ -86,25 +97,34 @@ def write_report_after_cleaning(report: list):
         f.write("\n")
         f.write("Missing value\n")
         
-        for r in report:
+        for r in report[0]:
             f.write(f"-- {r['column']} : {r['null_value']}\n")
-            
+        
+        f.write("\n")
+        f.write("Dublicate\n")
+        f.write(f"-- Dublicate value : {report[1]['duplicate']} ")
+        f.write("\n")
         f.write("\n")
 
 def summary(report_before: list, report_after: list):
     missing_value = 0
-    for r in report_before:
+    for r in report_before[0]:
         missing_value += r['null_value']
         
     with open("validation_report.txt", "a", encoding="utf-8") as f:
         f.write("  🔹 SUMMARY\n")
         f.write("------------------------------\n")
+        f.write("\n")
         f.write("Total Issues Fixed\n")
+        f.write("\n")
         f.write(f"-- Missing values fixed: {missing_value}\n")
+        f.write("\n")
         f.write("Final Data Quality: ✅ CLEAN & READY\n")
 
 def write_report(report_before: list, report_after: list):
+    logging.info("Preparing report")
     write_tittle()
     write_report_before_cleaning(report_before)
     write_report_after_cleaning(report_after)
+    logging.info("Preparing summary")
     summary(report_before, report_after)

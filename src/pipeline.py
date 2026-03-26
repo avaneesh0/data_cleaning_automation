@@ -14,7 +14,7 @@ def process_all_file(files: list):
         
         data = loadDataFrame(file)
         dfReport_before = dataframe_report(data)
-
+        print(dfReport_before)
         processed_data = data.copy()
 
         processed_data = removeDublicate(processed_data)
