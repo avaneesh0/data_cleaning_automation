@@ -1,5 +1,6 @@
 from src.cleaning import  loadDataFrame, removeDublicate, cleanData, saveOutput
-from src.utils import dataframe_report, write_report, summary
+from src.utils import dataframe_report
+from src.validation import write_report
 import logging
 
 
@@ -14,7 +15,6 @@ def process_all_file(files: list):
         
         data = loadDataFrame(file)
         dfReport_before = dataframe_report(data)
-        print(dfReport_before)
         processed_data = data.copy()
 
         processed_data = removeDublicate(processed_data)

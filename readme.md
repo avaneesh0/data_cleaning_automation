@@ -24,6 +24,9 @@ src/
   cleaning.py
   pipeline.py
   utils.py
+  validation.py
+
+validator/      # Validation file will be there
 
 run.py          # Main script to run the project
 requirements.txt
@@ -34,11 +37,12 @@ README.md
 
 ## ⚙️ Features
 
-* Load multiple files automatically
+* Clean multiple files automatically
 * Remove duplicate records
 * Clean and process data
 * Save cleaned output files
 * Fully automated pipeline
+* Create validation report
 
 ---
 
@@ -90,6 +94,7 @@ data/processed/
    * Remove duplicates
    * Apply cleaning functions
 3. Saves cleaned files to `data/processed`
+4. Prepare validation report
 
 ---
 
@@ -111,6 +116,4 @@ data/processed/
 ## 🔥 Future Improvements
 
 * Add CLI arguments (custom input/output paths)
-* Add logging system
-* Add data validation reports
 * Support more file formats
