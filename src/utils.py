@@ -22,7 +22,7 @@ def fileDetail() -> list:
             if ext[1] in [".csv",".xlsx", ".xlsm", ".xltx", ".xltm"]:
                 
                 file = {
-                "fileName": f,
+                "fileName": ext[0],
                 "filePath": filePath,
                 "fileExt": ext[1],
                 "loadDataFrame": True
@@ -31,7 +31,7 @@ def fileDetail() -> list:
             else:
                 
                 file = {
-                    "fileName": f,
+                    "fileName": ext[0],
                     "filePath": filePath,
                     "fileExt": ext[1],
                     "loadDataFrame": False

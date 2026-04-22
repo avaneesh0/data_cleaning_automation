@@ -27,13 +27,13 @@ def loadDataFrame(file) -> pd.DataFrame:
         
 def saveOutput(data: pd.DataFrame, file: dict):
     if file["fileExt"] == ".csv":
-        data.to_csv(f"data/processed/{file['fileName']}", index=False)
+        data.to_csv(f"data/processed/{file['fileName']+file["fileExt"]}", index=False)
         logging.info(f"Saving cleaned file at [data/processed/{file['fileName']}]")
     else:
         extention = [".xlsx", ".xlsm", ".xltx", ".xltm"]
         for ext in extention:
             if file["fileExt"] == ext:
-                data.to_excel(f"data/processed/{file['fileName']}", index=False)
+                data.to_excel(f"data/processed/{file['fileName']+file["fileExt"]}", index=False)
                 logging.info(f"Saving cleaned file at [data/processed/{file['fileName']}]")
                 
 def removeDublicate(data: pd.DataFrame) -> pd.DataFrame:

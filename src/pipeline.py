@@ -22,6 +22,6 @@ def process_all_file(files: list):
         saveOutput(processed_data, file)
         
         dfReport_after = dataframe_report(processed_data, dfReport_before)
-        write_report(dfReport_before , dfReport_after)
+        write_report(dfReport_before , dfReport_after , file)
         
         logger.info(f"Processed {len(files)} files successfully")
